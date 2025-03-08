@@ -51,10 +51,11 @@ ggplot() +
     geom_spatraster_rgb(data=site_2_20220526_cropped)
 ```
 
-Great. Let's write it.
+Great. Let's write it._20220526_cropped
 
 ```{r}
-writeRaster(site_2_20220526_cropped, "./data/site_2_20220526_cropped.tif")
+site_2_20220526_cropped |>
+  writeRaster("./data/images/site_2_20220526_cropped.tif")
 ```
 
 ## 20 April 2023
