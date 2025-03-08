@@ -12,6 +12,7 @@ library(stars)
 library(lubridate)
 library(terra)
 library(tidyterra)
+library(here)
 ```
 
 ## 26 May 2022
@@ -51,11 +52,11 @@ ggplot() +
     geom_spatraster_rgb(data=site_2_20220526_cropped)
 ```
 
-Great. Let's write it._20220526_cropped
+Great. Let's write it.
 
 ```{r}
 site_2_20220526_cropped |>
-  writeRaster("./data/images/site_2_20220526_cropped.tif")
+  writeRaster(here("data", "images", "site_2_20220526_cropped.tif"))
 ```
 
 ## 20 April 2023
@@ -63,9 +64,9 @@ site_2_20220526_cropped |>
 Load another image, do pre-processing steps.
 
 ```{r}
-rast("/Users/a0161776/Documents/nicar/site_2_20230420.tif") |>
+rast(here("data", "images", "site_2_20230420.tif")) |>
     shift(2, -7) |>
-    writeRaster("/Users/a0161776/Documents/nicar/site_2_20230420_shifted.tif", overwrite=TRUE)
+    writeRaster(here("data", "images", "site_2_20230420_shifted.tif"), overwrite=TRUE)
 ```
 
 ## 28 October 2024
@@ -73,9 +74,9 @@ rast("/Users/a0161776/Documents/nicar/site_2_20230420.tif") |>
 Load another image, do pre-processing steps.
 
 ```{r}
-rast("/Users/a0161776/Documents/nicar/site_2_20241028.tif") |>
+rast(here("data", "images", "site_2_20241028.tif")) |> 
     shift(2, -9) |>
-    writeRaster("/Users/a0161776/Documents/nicar/site_2_20241028_shifted.tif", overwrite=TRUE)
+    writeRaster(here("data", "images", "site_2_20241028_shifted.tif"), overwrite=TRUE)
 ```
 
 ## Put it all together
@@ -83,20 +84,20 @@ rast("/Users/a0161776/Documents/nicar/site_2_20241028.tif") |>
 Load points.
 
 ```{r}
-all_points <- st_read("/Users/a0161776/Documents/nicar/all_points.gpkg") |>
+all_points <- st_read(here("data", "all_points.gpkg")) |>
     rowid_to_column()
 ```
 
 Now let's load our polys.
 
 ```{r}
-site_2_20220526_polys <- st_read("/Users/a0161776/Documents/nicar/site_2_20220526_polys.geojson") |>
+site_2_20220526_polys <- st_read(here("data", "polys", "site_2_20220526_polys.geojson")) |>
     mutate(dt = ymd("20220526"))
 
-site_2_20230420_polys <- st_read("/Users/a0161776/Documents/nicar/site_2_20230420_polys.geojson") |>
+site_2_20230420_polys <- st_read(here("data", "polys", "site_2_20230420_polys.geojson")) |>
     mutate(dt = ymd("20230420"))
 
-site_2_20241028_polys <- st_read("/Users/a0161776/Documents/nicar/site_2_20241028_polys.geojson") |>
+site_2_20241028_polys <- st_read(here("data", "polys", "site_2_20241028_polys.geojson")) |>
     mutate(dt = ymd("20241028"))
 ```
 
