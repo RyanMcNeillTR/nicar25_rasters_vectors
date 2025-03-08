@@ -54,7 +54,7 @@ ggplot() +
 Great. Let's write it.
 
 ```{r}
-writeRaster(site_2_20220526_cropped, "/Users/a0161776/Documents/nicar/site_2_20220526_cropped.tif")
+writeRaster(site_2_20220526_cropped, "./data/site_2_20220526_cropped.tif")
 ```
 
 ## 20 April 2023
