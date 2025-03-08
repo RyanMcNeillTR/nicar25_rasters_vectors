@@ -1,0 +1,49 @@
+---
+title: "Untitled"
+format: html
+---
+  
+```{r}
+library(terra)
+library(tidyterra)
+library(sf)
+library(stars)
+```
+
+
+You can learn more about what others are available at [Awesome Spectral Indices](https://github.com/awesome-spectral-indices/awesome-spectral-indices?tab=readme-ov-file). You can [download a CSV](https://github.com/awesome-spectral-indices/awesome-spectral-indices/blob/main/output/spectral-indices-table.csv) of spectral indices as a CSV.
+
+
+```{r}
+nbr_s2_geneina_20230504 <- rast("./data/images/nbr_s2_geneina_20230504_nir_s.tif") |>
+  rename(N=1, S2=2) |>
+  mutate(nbr = (N - S2) / (N + S2))
+```
+
+Let's see how things look. 
+
+```{r}
+ggplot() +
+    geom_spatraster(data=nbr_s2_geneina_20230504, aes(fill=nbr))
+```
+
+So let's take a look using a filter. 
+
+```{r}
+ggplot() + 
+  geom_spatraster(data=nbr_s2_geneina_20230504 |>
+                    filter(nbr <= -0.17), 
+                  aes(fill=nbr))
+```
+
+Now let's turn our raster into vectors. 
+
+
+```{r}
+nbr_s2_geneina_20230504 |>
+    filter(nbr <= -0.2) |>
+    st_as_stars() |>
+    st_as_sf() |>
+    st_write("./data/nbr_s2_geneina_20230504_vectors.gpkg", append=FALSE)
+```
+
